@@ -48,17 +48,12 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
     fi
   done
 
-  # join the format parts into a single space-separated string
-  format_line=$(IFS=' '; echo "${format_parts[*]}")
-
-  # append the format block (safe heredoc inside script — not YAML)
   cat >> "$output" <<EOF
-[format]
 format = """
-${format_line} \\
+${format_parts} \\
 """
 EOF
 
-  echo "✅ Built $output"
+  echo "Built $output"
 done
 
