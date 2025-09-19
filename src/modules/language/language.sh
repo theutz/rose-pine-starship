@@ -16,7 +16,7 @@ declare -A languages=(
   [python]=" "
 )
 # From root dir of git to modules
-output="./src/modules/language"
+output="./src/modules/languages"
 echo "" > $output
 
 for lang in "${!languages[@]}"; do
