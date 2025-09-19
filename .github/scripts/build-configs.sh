@@ -41,7 +41,7 @@ for cfg in $configs; do
         format_parts+=("\$${lang}")
       done
     else
-      file="$MODULE_DIR/${mod}.toml"
+      file="$MODULE_DIR/${mod}"
       if [ -f "$file" ]; then
         cat "$file" >> "$output"
         echo >> "$output"
@@ -53,7 +53,7 @@ for cfg in $configs; do
   done
 
   # join array into space-separated string
-  format_line=$(IFS=' '; echo "${format_parts[*]}")
+  format_line=$(IFS='\ \n'; echo "${format_parts[*]}")
 
   # write format block
   cat >> "$output" <<EOF
