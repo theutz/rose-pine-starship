@@ -1,4 +1,5 @@
 name: Generate Config
+
 on:
   push:
     branches: [main, dev]
@@ -8,23 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Generate language config
         run: bash ./src/modules/language/language.sh
-        
-      - name: Commit & push
+
+      - name: Commit language module updates
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add ./src/modules/languages
+          git commit -m "Update language modules" || echo "No changes in languages"
+          git push
 
       - name: Install jq
         run: sudo apt-get install -y jq
-        
+
       - name: Build configs from JSON
         run: |
           mkdir -p example
-
-          # Define what "languages" expands to
           lang_modules="c elixir elm golang haskell java julia nodejs nim rust scala python"
 
           configs=$(jq -c '.[]' ./src/configs.json)
@@ -34,35 +36,39 @@ jobs:
 
             output="example/${name}.toml"
             : > "$output"
-
             format=""
 
             for mod in $modules; do
               if [ "$mod" = "languages" ]; then
-                # Expand all languages
                 for lang in $lang_modules; do
                   if [ -f "src/modules/${lang}.toml" ]; then
                     cat "src/modules/${lang}.toml" >> "$output"
-                    echo -e "\n" >> "$output"
+                    echo >> "$output"
                   fi
                   format="$format \$$lang"
                 done
               else
                 if [ -f "src/modules/${mod}.toml" ]; then
                   cat "src/modules/${mod}.toml" >> "$output"
-                  echo -e "\n" >> "$output"
+                  echo >> "$output"
                 fi
                 format="$format \$$mod"
               fi
             done
 
-            # Add the format block at the bottom
+            # Append format block safely
             cat >> "$output" <<'EOF'
+[format]
 format = """
-\${format}\n  \
+FORMAT_PLACEHOLDER\n  \
+\$time\n  \
 [󱞪](fg:iris)
 """
 EOF
+
+            # Replace placeholder with actual format string
+            sed -i "s|FORMAT_PLACEHOLDER|${format}|g" "$output"
+
             echo "✅ Built $output"
           done
 
@@ -71,5 +77,5 @@ EOF
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add example/*.toml
-          git commit -m "Auto-build configs from modules" || echo "No changes to commit"
+          git commit -m "Auto-build configs from modules" || echo "No config changes"
           git push
