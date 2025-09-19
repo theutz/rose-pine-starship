@@ -28,10 +28,10 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
   jq -r '.modules[]' <<<"$cfg" | while IFS= read -r mod; do
     if [ "$mod" = "languages" ]; then
         if [ -f "$mod" ]; then
-          cat "$file" >> "$output"
+          cat "$mod" >> "$output"
           printf '\n' >> "$output"
         else
-          echo "Warning: $file not found, skipping" >&2
+          echo "Warning: $mod not found, skipping" >&2
         fi
       for lang in "${lang_modules[@]}"; do
         format_parts+=("\$${lang}")
