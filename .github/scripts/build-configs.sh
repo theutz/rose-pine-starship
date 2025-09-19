@@ -30,14 +30,9 @@ for cfg in $configs; do
 
   for mod in "${modules[@]}"; do
     if [ "$mod" = "languages" ]; then
+      cat "$mod" >> "$output"
+      echo >> "$output"
       for lang in "${lang_modules[@]}"; do
-        file="$MODULE_DIR/${lang}.toml"
-        if [ -f "$file" ]; then
-          cat "$file" >> "$output"
-          echo >> "$output"
-        else
-          echo "Warning: $file not found, skipping" >&2
-        fi
         format_parts+=("\$${lang}")
       done
     else
@@ -53,7 +48,7 @@ for cfg in $configs; do
   done
 
   # join array into space-separated string
-  format_line=$(printf "%s \ \n" "${format_parts[@]}")
+  format_line=$(printf "%s \\n" "${format_parts[@]}")
 
   # write format block
   cat >> "$output" <<EOF
