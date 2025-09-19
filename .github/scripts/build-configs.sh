@@ -30,7 +30,8 @@ for cfg in $configs; do
 
   for mod in "${modules[@]}"; do
     if [ "$mod" = "languages" ]; then
-      cat "$mod" >> "$output"
+      file="$MODULE_DIR/${mod}"
+      cat "$file" >> "$output"
       echo >> "$output"
       for lang in "${lang_modules[@]}"; do
         format_parts+=("\$${lang}")
