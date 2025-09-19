@@ -57,9 +57,9 @@ jobs:
             done
 
             # Add the format block at the bottom
-            cat >> "$output" <<EOF
+            cat >> "$output" <<'EOF'
 format = """
-${format}\n  \
+\${format}\n  \
 [󱞪](fg:iris)
 """
 EOF
