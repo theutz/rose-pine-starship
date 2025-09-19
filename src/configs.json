@@ -1,13 +1,13 @@
 [
   {
-    "name": "home.toml",
+    "name": "home",
     "modules": [
       "languages",
       "username"
     ]
   },
   {
-    "name": "server2.toml",
+    "name": "server2",
     "modules": [
       "languages",
       "username",

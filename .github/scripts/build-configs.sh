@@ -27,14 +27,13 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
   # iterate modules in order
   jq -r '.modules[]' <<<"$cfg" | while IFS= read -r mod; do
     if [ "$mod" = "languages" ]; then
-      for lang in "${lang_modules[@]}"; do
-        file="$MODULE_DIR/${lang}.toml"
-        if [ -f "$file" ]; then
+        if [ -f "$mod" ]; then
           cat "$file" >> "$output"
           printf '\n' >> "$output"
         else
           echo "Warning: $file not found, skipping" >&2
         fi
+      for lang in "${lang_modules[@]}"; do
         format_parts+=("\$${lang}")
       done
     else
@@ -56,14 +55,7 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
   cat >> "$output" <<EOF
 [format]
 format = """
-\$username \
-\$directory \
-\$git_branch \
-\$git_status \
-\$fill \
-${format_line} \
-\$time \
-[󱞪](fg:iris)
+${format_line} \\
 """
 EOF
 
