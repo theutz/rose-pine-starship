@@ -40,7 +40,7 @@ for cfg in $configs; do
   # write format block FIRST
   format_line=$(printf "%s \\n" "${format_parts[@]}")
   cat > "$output" <<EOF
-"$schema" = 'https://starship.rs/config-schema.json'
+"\$schema" = 'https://starship.rs/config-schema.json'
   
 format = """
 ${format_line} \
