@@ -10,8 +10,7 @@ mkdir -p "$OUT_DIR"
 # list of language modules (order preserved)
 lang_modules=(c elixir elm golang haskell java julia nodejs nim rust scala python)
 
-  format_parts=()
-# iterate each config object (preserves order)
+# iterate each config object
 jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
   name=$(jq -r '.name' <<<"$cfg")
   if [ -z "$name" ] || [ "$name" = "null" ]; then
@@ -22,18 +21,20 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
   output="$OUT_DIR/${name}.toml"
   : > "$output"
 
-  # accumulate format tokens (literal $var strings)
+  format_parts=()  # reset for each config
 
-  # iterate modules in order
+  # iterate modules listed in the config
   jq -r '.modules[]' <<<"$cfg" | while IFS= read -r mod; do
     if [ "$mod" = "languages" ]; then
-        if [ -f "$mod" ]; then
-          cat "$mod" >> "$output"
+      # expand all language modules
+      for lang in "${lang_modules[@]}"; do
+        file="$MODULE_DIR/${lang}.toml"
+        if [ -f "$file" ]; then
+          cat "$file" >> "$output"
           printf '\n' >> "$output"
         else
-          echo "Warning: $mod not found, skipping" >&2
+          echo "Warning: $file not found, skipping" >&2
         fi
-      for lang in "${lang_modules[@]}"; do
         format_parts+=("\$${lang}")
       done
     else
@@ -48,12 +49,15 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
     fi
   done
 
+  # join format parts into a string for the TOML
+  format_line=$(IFS=' '; echo "${format_parts[*]}")
+
   cat >> "$output" <<EOF
 format = """
-${format_parts} \\
+${format_line} \
+[󱞪](fg:iris)
 """
 EOF
 
-  echo "Built $output"
+  echo "✅ Built $output"
 done
-
