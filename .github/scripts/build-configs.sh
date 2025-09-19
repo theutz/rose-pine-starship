@@ -10,6 +10,7 @@ mkdir -p "$OUT_DIR"
 # list of language modules (order preserved)
 lang_modules=(c elixir elm golang haskell java julia nodejs nim rust scala python)
 
+  format_parts=()
 # iterate each config object (preserves order)
 jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
   name=$(jq -r '.name' <<<"$cfg")
@@ -22,7 +23,6 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
   : > "$output"
 
   # accumulate format tokens (literal $var strings)
-  format_parts=()
 
   # iterate modules in order
   jq -r '.modules[]' <<<"$cfg" | while IFS= read -r mod; do
