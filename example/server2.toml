@@ -1,3 +1,21 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+  
+format = """
+$c 
+$elixir 
+$elm 
+$golang 
+$haskell 
+$java 
+$julia 
+$nodejs 
+$nim 
+$rust 
+$scala 
+$python 
+$username 
+$hostname  [󱞪](fg:iris)
+"""
 
 [java]
 style = "bg:overlay fg:pine"
@@ -79,19 +97,3 @@ show_always = true
 style_root = "bg:overlay fg:iris"
 style_user = "bg:overlay fg:iris"
 
-format = """
-$c 
-$elixir 
-$elm 
-$golang 
-$haskell 
-$java 
-$julia 
-$nodejs 
-$nim 
-$rust 
-$scala 
-$python 
-$username 
-$hostname  [󱞪](fg:iris)
-"""
