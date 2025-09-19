@@ -1,0 +1,4 @@
+[git_branch]
+format = "[](fg:overlay)[ $symbol $branch ]($style)[](fg:overlay)"
+style = "bg:overlay fg:foam"
+symbol = ""
