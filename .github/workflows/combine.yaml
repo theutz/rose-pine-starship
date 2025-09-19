@@ -58,11 +58,11 @@ jobs:
 
             # Add the format block at the bottom
             cat >> "$output" <<EOF
-            format = """
-            ${format}\n  \
-            [󱞪](fg:iris)
-            """
-              EOF
+format = """
+${format}\n  \
+[󱞪](fg:iris)
+"""
+EOF
             echo "✅ Built $output"
           done
 
