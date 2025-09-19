@@ -24,40 +24,43 @@ for cfg in $configs; do
   : > "$output"
 
   format_parts=()  # reset for each config
-
-  # read modules as an array
   modules=($(jq -r '.modules[]' <<<"$cfg"))
 
+  # build format_parts array without touching output yet
   for mod in "${modules[@]}"; do
     if [ "$mod" = "languages" ]; then
-      file="$MODULE_DIR/${mod}"
-      cat "$file" >> "$output"
-      echo >> "$output"
       for lang in "${lang_modules[@]}"; do
         format_parts+=("\$${lang}")
       done
     else
-      file="$MODULE_DIR/${mod}"
-      if [ -f "$file" ]; then
-        cat "$file" >> "$output"
-        echo >> "$output"
-      else
-        echo "Warning: $file not found, skipping" >&2
-      fi
       format_parts+=("\$${mod}")
     fi
   done
 
-  # join array into space-separated string
+  # write format block FIRST
   format_line=$(printf "%s \\n" "${format_parts[@]}")
-
-  # write format block
-  cat >> "$output" <<EOF
+  cat > "$output" <<EOF
+"$schema" = 'https://starship.rs/config-schema.json'
+  
 format = """
 ${format_line} \
 [󱞪](fg:iris)
 """
 EOF
+
+
+  # Add palette here
+
+  # then append each module content
+  for mod in "${modules[@]}"; do
+    file="$MODULE_DIR/${mod}"
+    if [ -f "$file" ]; then
+      cat "$file" >> "$output"
+      echo >> "$output"
+    else
+      echo "Warning: $file not found, skipping" >&2
+    fi
+  done
 
   echo "✅ Built $output"
 done
