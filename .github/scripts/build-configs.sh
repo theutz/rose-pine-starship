@@ -53,7 +53,7 @@ for cfg in $configs; do
   done
 
   # join array into space-separated string
-  format_line=$(IFS='\ \n'; echo "${format_parts[*]}")
+  format_line=$(IFS='\ \\n'; echo "${format_parts[*]}")
 
   # write format block
   cat >> "$output" <<EOF
