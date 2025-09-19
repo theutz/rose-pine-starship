@@ -10,8 +10,10 @@ mkdir -p "$OUT_DIR"
 # list of language modules (order preserved)
 lang_modules=(c elixir elm golang haskell java julia nodejs nim rust scala python)
 
-# iterate each config object
-jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
+# read all configs into an array to avoid subshell issues
+configs=$(jq -c '.[]' "$CONFIG_JSON")
+
+for cfg in $configs; do
   name=$(jq -r '.name' <<<"$cfg")
   if [ -z "$name" ] || [ "$name" = "null" ]; then
     echo "Skipping invalid config: $cfg" >&2
@@ -23,15 +25,16 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
 
   format_parts=()  # reset for each config
 
-  # iterate modules listed in the config
-  jq -r '.modules[]' <<<"$cfg" | while IFS= read -r mod; do
+  # read modules as an array
+  modules=($(jq -r '.modules[]' <<<"$cfg"))
+
+  for mod in "${modules[@]}"; do
     if [ "$mod" = "languages" ]; then
-      # expand all language modules
       for lang in "${lang_modules[@]}"; do
         file="$MODULE_DIR/${lang}.toml"
         if [ -f "$file" ]; then
           cat "$file" >> "$output"
-          printf '\n' >> "$output"
+          echo >> "$output"
         else
           echo "Warning: $file not found, skipping" >&2
         fi
@@ -41,7 +44,7 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
       file="$MODULE_DIR/${mod}.toml"
       if [ -f "$file" ]; then
         cat "$file" >> "$output"
-        printf '\n' >> "$output"
+        echo >> "$output"
       else
         echo "Warning: $file not found, skipping" >&2
       fi
@@ -49,9 +52,10 @@ jq -c '.[]' "$CONFIG_JSON" | while IFS= read -r cfg; do
     fi
   done
 
-  # join format parts into a string for the TOML
+  # join array into space-separated string
   format_line=$(IFS=' '; echo "${format_parts[*]}")
 
+  # write format block
   cat >> "$output" <<EOF
 format = """
 ${format_line} \
