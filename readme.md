@@ -15,6 +15,9 @@
 
 Change your ```~/.config/starship.toml``` to one of the options above (make sure it is named ```starship.toml``` and not ```rose-pine.toml```)
 
+### Pre-reqs
+Make sure you have a nerd-font installed, there are recommended nerd fonts on the [starship](https://github.com/starship/starship) readme.
+
 ## Gallery
 **Rosé Pine**
 ![image](https://github.com/user-attachments/assets/6814f68e-bc4c-468d-8353-1a86f63ed903)
