@@ -1,8 +1,7 @@
 name: Generate Config
 on:
   push:
-    paths:
-      - ".github/workflows/combine.yml"
+    branches: [main, dev]
 
 jobs:
   generate:
