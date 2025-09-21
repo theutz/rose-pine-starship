@@ -3,7 +3,7 @@
     "name": "home",
     "modules": [
       "username",
-      "languages",
+      "languages"
     ]
   },
   {
@@ -11,7 +11,7 @@
     "modules": [
       "username",
       "hostname",
-      "languages",
+      "languages"
     ]
   }
 ]
