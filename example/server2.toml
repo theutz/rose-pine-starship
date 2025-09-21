@@ -1,6 +1,8 @@
 "$schema" = 'https://starship.rs/config-schema.json'
   
 format = """
+$username 
+$hostname 
 $c 
 $elixir 
 $elm 
@@ -12,10 +14,15 @@ $nodejs
 $nim 
 $rust 
 $scala 
-$python 
-$username 
-$hostname  [󱞪](fg:iris)
+$python  [󱞪](fg:iris)
 """
+[username]
+disabled = false
+format = "[](fg:overlay)[ 󰧱 $user ]($style)[](fg:overlay)"
+show_always = true
+style_root = "bg:overlay fg:iris"
+style_user = "bg:overlay fg:iris"
+
 
 [java]
 style = "bg:overlay fg:pine"
@@ -89,11 +96,4 @@ format = "[](fg:overlay)[ $version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
-
-[username]
-disabled = false
-format = "[](fg:overlay)[ 󰧱 $user ]($style)[](fg:overlay)"
-show_always = true
-style_root = "bg:overlay fg:iris"
-style_user = "bg:overlay fg:iris"
 
