@@ -2,16 +2,17 @@
   {
     "name": "home",
     "modules": [
+      "username",
       "languages",
-      "username"
+
     ]
   },
   {
     "name": "server2",
     "modules": [
-      "languages",
       "username",
-      "hostname"
+      "hostname",
+      "languages",
     ]
   }
 ]
