@@ -21,6 +21,12 @@
       "languages",
       "time"
     ]
-  }
+  },
+  {
+    "name": "minimal",
+    "modules": [
+      "username",
+      "directory"
+    ]
+  },
 ]
-
