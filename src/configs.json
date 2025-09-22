@@ -3,7 +3,11 @@
     "name": "home",
     "modules": [
       "username",
-      "languages"
+      "directory",
+      "git_branch",
+      "fill",
+      "languages",
+      "time"
     ]
   },
   {
@@ -11,7 +15,11 @@
     "modules": [
       "username",
       "hostname",
-      "languages"
+      "directory",
+      "git_branch",
+      "fill",
+      "languages",
+      "time"
     ]
   }
 ]
