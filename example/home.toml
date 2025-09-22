@@ -2,6 +2,9 @@
   
 format = """
 $username 
+$directory 
+$git_branch 
+$fill 
 $c 
 $elixir 
 $elm 
@@ -13,7 +16,8 @@ $nodejs
 $nim 
 $rust 
 $scala 
-$python  [󱞪](fg:iris)
+$python 
+$time  [󱞪](fg:iris)
 """
 [username]
 disabled = false
@@ -21,6 +25,27 @@ format = "[](fg:overlay)[ 󰧱 $user ]($style)[](fg:overlay)"
 show_always = true
 style_root = "bg:overlay fg:iris"
 style_user = "bg:overlay fg:iris"
+
+[directory]
+format = "[](fg:overlay)[ $path ]($style)[](fg:overlay)"
+style = "bg:overlay fg:pine"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+Documents = "󰈙"
+Downloads = " "
+Music = " "
+Pictures = " "
+
+[git_branch]
+format = "[](fg:overlay)[ $symbol $branch ]($style)[](fg:overlay)"
+style = "bg:overlay fg:foam"
+symbol = ""
+
+[fill]
+style = "fg:overlay"
+symbol = " "
 
 
 [java]
@@ -95,4 +120,11 @@ format = "[](fg:overlay)[ $version]($style)[](fg:overlay) "
 disabled = false
 symbol = " "
 
+
+[time]
+disabled = false
+format = "[](fg:overlay)[ $time 󰴈 ]($style)[](fg:overlay)"
+style = "bg:overlay fg:rose"
+time_format = "%I:%M%P"
+use_12hr = true
 
