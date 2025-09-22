@@ -1,6 +1,6 @@
 [
   {
-    "name": "home",
+    "name": "personal-computer",
     "modules": [
       "username",
       "directory",
@@ -11,7 +11,7 @@
     ]
   },
   {
-    "name": "server2",
+    "name": "server",
     "modules": [
       "username",
       "hostname",
