@@ -36,6 +36,7 @@ for cfg in $configs; do
   output="$OUT_DIR/${name}"
   : > "$output"
 
+  rm -rf "$output"
   mkdir "$output"
 
   format_parts=()  # reset for each config
