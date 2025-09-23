@@ -19,6 +19,8 @@ prompt1="[󱞪](fg:iris) \\"
 
 palettes=("rose-pine", "rose-pine-moon", "rose-pine-dawn")
 
+mkdir OUT_DIR
+
 # read all configs into an array to avoid subshell issues
 configs=$(jq -c '.[]' "$CONFIG_JSON")
 
@@ -63,12 +65,12 @@ EOF
 
 
   # Add palette here
-  for pal in palettes; do
+  for pal in "${palettes[@]}"; do
     output="${output}-${pal}.toml"
 
     pal_file="$PALETTE_DIR/${pal}"
     if [ -f "$pal_file" ]; then
-      cat "$file" >> "$output"
+      cat "$pal_file" >> "$output"
       echo >> "$output"
     else
       echo "Warning: $pal_file not found, skipping" >&2
