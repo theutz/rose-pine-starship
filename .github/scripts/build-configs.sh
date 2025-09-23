@@ -17,7 +17,7 @@ lang_modules=(c elixir elm golang haskell java julia nodejs nim rust scala pytho
 # Add prompts here
 prompt1="[󱞪](fg:iris) \\"
 
-palettes=("rose-pine", "rose-pine-moon", "rose-pine-dawn")
+palettes=("rose-pine" "rose-pine-moon" "rose-pine-dawn")
 
 mkdir OUT_DIR
 
@@ -53,9 +53,14 @@ for cfg in $configs; do
     fi
   done
 
-  # write format block FIRST
-  format_line=$(printf "%s \\n" "${format_parts[@]}")
-  cat > "$output" <<EOF
+
+  # Add palette here
+  for pal in "${palettes[@]}"; do
+    outputp="${output}-${pal}.toml"
+
+    # write format block FIRST
+    format_line=$(printf "%s \\n" "${format_parts[@]}")
+    cat > "$outputp" <<EOF
 "\$schema" = 'https://starship.rs/config-schema.json'
   
 format = """
@@ -64,14 +69,10 @@ ${format_line} \
 EOF
 
 
-  # Add palette here
-  for pal in "${palettes[@]}"; do
-    output="${output}-${pal}.toml"
-
     pal_file="$PALETTE_DIR/${pal}"
     if [ -f "$pal_file" ]; then
-      cat "$pal_file" >> "$output"
-      echo >> "$output"
+      cat "$pal_file" >> "$outputp"
+      echo >> "$outputp"
     else
       echo "Warning: $pal_file not found, skipping" >&2
     fi
@@ -80,13 +81,13 @@ EOF
     for mod in "${modules[@]}"; do
       file="$MODULE_DIR/${mod}"
       if [ -f "$file" ]; then
-        cat "$file" >> "$output"
-        echo >> "$output"
+        cat "$file" >> "$outputp"
+        echo >> "$outputp"
       else
         echo "Warning: $file not found, skipping" >&2
       fi
     done
   done
 
-  echo "✅ Built $output"
+  echo "✅ Built $outputp"
 done
