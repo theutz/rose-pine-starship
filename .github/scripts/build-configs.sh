@@ -72,6 +72,7 @@ EOF
       echo >> "$output"
     else
       echo "Warning: $pal_file not found, skipping" >&2
+    fi
     
     # then append each module content
     for mod in "${modules[@]}"; do
@@ -83,6 +84,7 @@ EOF
         echo "Warning: $file not found, skipping" >&2
       fi
     done
+  done
 
   echo "✅ Built $output"
 done
