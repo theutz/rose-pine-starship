@@ -1,18 +1,32 @@
 [
   {
-    "name": "home",
+    "name": "personal-computer",
     "modules": [
+      "username",
+      "directory",
+      "git_branch",
+      "fill",
       "languages",
-      "username"
+      "time"
     ]
   },
   {
-    "name": "server2",
+    "name": "server",
     "modules": [
-      "languages",
       "username",
-      "hostname"
+      "hostname",
+      "directory",
+      "git_branch",
+      "fill",
+      "languages",
+      "time"
+    ]
+  },
+  {
+    "name": "minimal",
+    "modules": [
+      "username",
+      "directory"
     ]
   }
 ]
-
