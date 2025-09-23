@@ -1,0 +1,5 @@
+[hostname]
+ssh_only = true
+ssh_symbol = "󰒋"
+format = "[](fg:overlay)[ $hostname $ssh_symbol ]($style)($style)[](fg:overlay) "
+style = "bg:overlay fg:iris"
