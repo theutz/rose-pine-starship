@@ -19,6 +19,8 @@ prompt1="[󱞪](fg:iris) \\"
 
 palettes=("rose-pine" "rose-pine-moon" "rose-pine-dawn")
 
+# Hard reset everything
+rm -rf OUT_DIR
 mkdir OUT_DIR
 
 # read all configs into an array to avoid subshell issues
@@ -53,10 +55,10 @@ for cfg in $configs; do
     fi
   done
 
-
+  mkdir output
   # Add palette here
   for pal in "${palettes[@]}"; do
-    outputp="${output}-${pal}.toml"
+    outputp="${output}/${pal}.toml"
 
     # write format block FIRST
     format_line=$(printf "%s \\n" "${format_parts[@]}")
