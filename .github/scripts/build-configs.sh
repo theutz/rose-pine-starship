@@ -36,6 +36,8 @@ for cfg in $configs; do
   output="$OUT_DIR/${name}"
   : > "$output"
 
+  mkdir output
+
   format_parts=()  # reset for each config
   modules=($(jq -r '.modules[]' <<<"$cfg"))
 
@@ -55,7 +57,6 @@ for cfg in $configs; do
     fi
   done
 
-  mkdir output
   # Add palette here
   for pal in "${palettes[@]}"; do
     outputp="${output}/${pal}.toml"
