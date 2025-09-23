@@ -36,7 +36,7 @@ for cfg in $configs; do
   output="$OUT_DIR/${name}"
   : > "$output"
 
-  mkdir output
+  mkdir "$output"
 
   format_parts=()  # reset for each config
   modules=($(jq -r '.modules[]' <<<"$cfg"))
