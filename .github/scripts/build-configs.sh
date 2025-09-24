@@ -34,7 +34,6 @@ for cfg in $configs; do
   fi
 
   output="$OUT_DIR/${name}"
-  : > "$output"
 
   rm -rf "$output"
   mkdir "$output"
@@ -61,6 +60,7 @@ for cfg in $configs; do
   # Add palette here
   for pal in "${palettes[@]}"; do
     outputp="${output}/${pal}.toml"
+    : > "$outputp"
 
     # write format block FIRST
     format_line=$(printf "%s \\n" "${format_parts[@]}")
