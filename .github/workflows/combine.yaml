@@ -15,8 +15,8 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: (optional) Generate language module
-        run: bash ./src/modules/language/language.sh || true
+      - name: Generate language module
+        run: bash ./src/modules/language/language.sh
 
       - name: Make build script executable
         run: chmod +x .github/scripts/build-configs.sh
@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add examples/*.toml || true
-          git add src/modules/languages || true
+          git add examples/*/*.toml
+          git add src/modules/languages
           git commit -m "Auto-build configs from modules" || echo "No changes to commit"
           git push
