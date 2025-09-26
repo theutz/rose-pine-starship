@@ -64,12 +64,11 @@ while read -r cfg; do
     outputp="$output/$pal.toml"
     : > "$outputp"
 
-    format_line=$(printf "%s\\\n" "${format_parts[@]}")
     cat > "$outputp" <<EOF
 "\$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-${format_line}
+$(printf "%s\\\n" "${format_parts[@]}")
 """
 EOF
 
