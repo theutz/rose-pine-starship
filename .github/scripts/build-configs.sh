@@ -87,6 +87,8 @@ EOF
       if [ -f "$file" ]; then
         sed "s/ACCENT/$colour/g" "$file" >> "$outputp"
         echo >> "$outputp"
+      elif ["$file" == "\n"]; then
+        echo "Newline added" >&2
       else
         echo "⚠️ Warning: $file not found, skipping" >&2
       fi
