@@ -18,7 +18,7 @@ $rust\
 $scala\ 
 $python\ 
 $time\ 
-$\  """
+$newline\  """
 palette = "rose-pine-dawn"
 
 [palettes.rose-pine-dawn]
