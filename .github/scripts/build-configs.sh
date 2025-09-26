@@ -8,33 +8,32 @@ PALETTE_DIR="./src/themes"
 OUT_DIR="./examples"
 mkdir -p "$OUT_DIR"
 
-# TODO: These are some things you may need to change as well, for example adding a
-# new prompt or languages
-
 # list of language modules (order preserved)
 lang_modules=(c elixir elm golang haskell java julia nodejs nim rust scala python)
 
 # Add prompts here
 prompt1="[󱞪](fg:iris) \\"
 
+# palettes
 palettes=("rose-pine" "rose-pine-moon" "rose-pine-dawn")
 
 # Hard reset everything
-rm -rf $OUT_DIR
-mkdir -p $OUT_DIR
+rm -rf "$OUT_DIR"
+mkdir -p "$OUT_DIR"
 
-# read all configs into an array to avoid subshell issues
-configs=$(jq -c '.[]' "$CONFIG_JSON")
-
-for cfg in $configs; do
+# iterate configs safely
+while read -r cfg; do
   name=$(jq -r '.name' <<<"$cfg")
-  [ -z "$name" ] || [ "$name" = "null" ] && continue
+  if [ -z "$name" ] || [ "$name" = "null" ]; then
+    echo "⚠️ Skipping invalid config: $cfg" >&2
+    continue
+  fi
 
   output="$OUT_DIR/$name"
   rm -rf "$output"
   mkdir -p "$output"
 
-  # build modules array with defaults
+  # read modules for this config
   modules=()
   colours=()
   while read -r mod; do
@@ -42,9 +41,9 @@ for cfg in $configs; do
     mcolour=$(jq -r '.colour // "iris"' <<<"$mod")
     modules+=("$mname")
     colours+=("$mcolour")
-  done < <(echo "$cfg" | jq -c '.modules[]')
+  done < <(jq -c '.modules[]' <<<"$cfg")
 
-  # build format_parts (still needs polish if you want prompt handling)
+  # build format_parts
   format_parts=()
   for mod in "${modules[@]}"; do
     if [ "$mod" = "languages" ]; then
@@ -52,13 +51,13 @@ for cfg in $configs; do
         format_parts+=("\$${lang}")
       done
     elif [ "$mod" = "prompt1" ]; then
-      prompt="$prompt1"
+      format_parts+=("$prompt1")
     else
       format_parts+=("\$${mod}")
     fi
   done
 
-  # iterate palettes
+  # loop over palettes
   for pal in "${palettes[@]}"; do
     outputp="$output/$pal.toml"
     : > "$outputp"
@@ -73,7 +72,12 @@ ${format_line} \
 EOF
 
     pal_file="$PALETTE_DIR/$pal"
-    [ -f "$pal_file" ] && cat "$pal_file" >> "$outputp" || echo "Warning: $pal_file missing" >&2
+    if [ -f "$pal_file" ]; then
+      cat "$pal_file" >> "$outputp"
+      echo >> "$outputp"
+    else
+      echo "⚠️ Warning: $pal_file not found, skipping" >&2
+    fi
 
     # append each module, replacing ACCENT with its colour
     for i in "${!modules[@]}"; do
@@ -84,8 +88,10 @@ EOF
         sed "s/ACCENT/$colour/g" "$file" >> "$outputp"
         echo >> "$outputp"
       else
-        echo "Warning: $file not found, skipping" >&2
+        echo "⚠️ Warning: $file not found, skipping" >&2
       fi
     done
+
+    echo "✅ Built $outputp"
   done
-done
+done < <(jq -c '.[]' "$CONFIG_JSON")
