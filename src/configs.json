@@ -3,7 +3,7 @@
     "name": "personal-computer",
     "modules": [
       {"name": "username"},
-      {"name": "directory"},
+      {"name": "directory", colour: "pine"},
       {"name": "git_branch"},
       {"name": "fill"},
       {"name": "languages"},
