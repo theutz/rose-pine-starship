@@ -1,24 +1,24 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-$username 
-$hostname 
-$directory 
-$git_branch 
-$fill 
-$c 
-$elixir 
-$elm 
-$golang 
-$haskell 
-$java 
-$julia 
-$nodejs 
-$nim 
-$rust 
-$scala 
-$python 
-$time  """
+$username\ 
+$hostname\ 
+$directory\ 
+$git_branch\ 
+$fill\ 
+$c\ 
+$elixir\ 
+$elm\ 
+$golang\ 
+$haskell\ 
+$java\ 
+$julia\ 
+$nodejs\ 
+$nim\ 
+$rust\ 
+$scala\ 
+$python\ 
+$time\  """
 palette = "rose-pine"
 
 [palettes.rose-pine]
