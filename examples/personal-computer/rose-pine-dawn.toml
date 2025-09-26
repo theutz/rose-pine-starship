@@ -17,7 +17,8 @@ $nim\
 $rust\ 
 $scala\ 
 $python\ 
-$time\  """
+$time\ 
+$\  """
 palette = "rose-pine-dawn"
 
 [palettes.rose-pine-dawn]
