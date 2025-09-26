@@ -52,6 +52,8 @@ while read -r cfg; do
       done
     elif [ "$mod" = "prompt1" ]; then
       format_parts+=("$prompt1")
+    elif [ "mod" = "newline" ]; then
+      format_parts+=("\n")
     else
       format_parts+=("\$${mod}")
     fi
@@ -87,8 +89,6 @@ EOF
       if [ -f "$file" ]; then
         sed "s/ACCENT/$colour/g" "$file" >> "$outputp"
         echo >> "$outputp"
-      elif ["$file" == "\n"]; then
-        echo "Newline added" >&2
       else
         echo "⚠️ Warning: $file not found, skipping" >&2
       fi
