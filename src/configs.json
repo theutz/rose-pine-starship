@@ -2,31 +2,31 @@
   {
     "name": "personal-computer",
     "modules": [
-      "username",
-      "directory",
-      "git_branch",
-      "fill",
-      "languages",
-      "time"
+      {"name": "username"},
+      {"name": "directory"},
+      {"name": "git_branch"},
+      {"name": "fill"},
+      {"name": "languages"},
+      {"name": "time"}
     ]
   },
   {
     "name": "server",
     "modules": [
-      "username",
-      "hostname",
-      "directory",
-      "git_branch",
-      "fill",
-      "languages",
-      "time"
+      {"name": "username"},
+      {"name": "hostname"},
+      {"name": "directory"},
+      {"name": "git_branch"},
+      {"name": "fill"},
+      {"name": "languages"},
+      {"name": "time"}
     ]
   },
   {
     "name": "minimal",
     "modules": [
-      "username",
-      "directory"
+      {"name": "username"},
+      {"name": "directory"}
     ]
   }
 ]
