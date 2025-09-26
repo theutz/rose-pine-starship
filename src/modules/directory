@@ -1,6 +1,6 @@
 [directory]
 format = "[](fg:overlay)[ $path ]($style)[](fg:overlay)"
-style = "bg:overlay fg:pine"
+style = "bg:overlay fg:ACCENT"
 truncation_length = 3
 truncation_symbol = "…/"
 
