@@ -39,7 +39,9 @@ for cfg in $configs; do
   mkdir "$output"
 
   format_parts=()  # reset for each config
-  modules=($(jq -r '.modules[]' <<<"$cfg"))
+  jq -c '.modules[]' "$CONFIG_JSON" | while read -r mod; do
+    name=$(jq -r '.name' <<<"$mod")
+    colour=$(jq -r '.colour' <<<"$mod")
 
   prompt=""
   # build format_parts array without touching output yet
@@ -85,7 +87,7 @@ EOF
     for mod in "${modules[@]}"; do
       file="$MODULE_DIR/${mod}"
       if [ -f "$file" ]; then
-        cat "$file" >> "$outputp"
+        sed "s/ACCENT/$colour/g" "$file" >> "$outputp"
         echo >> "$outputp"
       else
         echo "Warning: $file not found, skipping" >&2
