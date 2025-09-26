@@ -52,7 +52,7 @@ while read -r cfg; do
       done
     elif [ "$mod" = "prompt1" ]; then
       format_parts+=("$prompt1")
-    elif [ "mod" = "newline" ]; then
+    elif [ "$mod" = "newline" ]; then
       format_parts+=("\n")
     else
       format_parts+=("\$${mod}")
@@ -64,7 +64,7 @@ while read -r cfg; do
     outputp="$output/$pal.toml"
     : > "$outputp"
 
-    format_line=$(printf "%s\\ \\n" "${format_parts[@]}")
+    format_line=$(printf "%s\\\n" "${format_parts[@]}")
     cat > "$outputp" <<EOF
 "\$schema" = 'https://starship.rs/config-schema.json'
 
