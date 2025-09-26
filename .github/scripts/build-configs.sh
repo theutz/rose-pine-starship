@@ -41,7 +41,7 @@ for cfg in $configs; do
   format_parts=()  # reset for each config
   jq -c '.modules[]' "$CONFIG_JSON" | while read -r mod; do
     name=$(jq -r '.name' <<<"$mod")
-    colour=$(jq -r '.colour' <<<"$mod")
+    colour=$(jq -r '.colour // "iris"' <<<"$mod")
 
   prompt=""
   # build format_parts array without touching output yet
