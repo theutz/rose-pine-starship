@@ -7,7 +7,8 @@
       {"name": "git_branch"},
       {"name": "fill"},
       {"name": "languages"},
-      {"name": "time"}
+      {"name": "time"},
+      {"name": "\n"}
     ]
   },
   {
