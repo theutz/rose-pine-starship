@@ -2,6 +2,7 @@
 
 format = """
 $username\
+$shell\
 $directory\
 $git_branch\
 $git_status\
@@ -33,6 +34,15 @@ rose = '#ebbcba'
 pine = '#31748f'
 foam = '#9ccfd8'
 iris = '#c4a7e7'
+
+[shell]
+disabled = false
+format = "[](fg:overlay)[ $indicator ]($style)[](fg:overlay) "
+style = "bg:overlay fg:foam"
+zsh_indicator = "  zsh"
+fish_indicator = "  fish"
+bash_indicator = "  bash"
+nu_indicator = "󰎖  nu"
 
 [directory]
 format = "[](fg:overlay)[ $path ]($style)[](fg:overlay) "
